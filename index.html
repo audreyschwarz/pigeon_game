@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
@@ -141,7 +141,7 @@ function update() {
           player.animations.play('walk');
         } else {
           if(!isTakingOff) {
-            player.body.velocity.x = -200;
+            player.body.velocity.x = -250;
             player.animations.play('fly');
           }
         }
@@ -156,14 +156,12 @@ function update() {
           player.animations.play('walk');
         } else {
           if(!isTakingOff) {
-            player.body.velocity.x = 200;
+            player.body.velocity.x = 250;
             player.animations.play('fly');
           }
         }
       }
-    }
-    else if(!isTakingOff)
-    {
+    } else if(!isTakingOff) {
       //  Stand still
       player.animations.stop();
 
@@ -178,8 +176,7 @@ function update() {
         isTakingOff = false;
         player.animations.play('fly');
       }
-    }
-    else if (cursors.up.isDown && !player.body.touching.down) {
+    } else if (cursors.up.isDown && !player.body.touching.down) {
       if(!isFlying) {
         player.body.velocity.y = -200;
       }
@@ -189,6 +186,11 @@ function update() {
     if(player.animations.currentFrame.index == 7) {
       isFlying = false;
     }
+}
+
+function render() {
+  //game.debug.quadTree(game.physics.arcade.quadTree);
+  game.debug.bodyInfo(player, 16, 24);
 }
 
 function collectStar (player, star) {
